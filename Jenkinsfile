@@ -34,6 +34,8 @@ pipeline {
 
                         iectl publisher workspace init
 
+                        cd ..
+
                         iectl config add iem --name "iemdev" --url ${IEM_URL} --user ${USER_NAME} --password '$PSWD'
                         iectl publisher standalone-app create --reponame ${REPO_NAME} --appdescription "upload using Jenkins" --iconpath ${ICON_PATH} --appname ${APP_NAME}
 
