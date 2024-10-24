@@ -19,6 +19,7 @@ pipeline {
 
                     def workspacedir = pwd() + "/workspace"
                     echo "$workspacedir"
+                    echo "2"
                     sh '''
                         rm -rf workspace
                         mkdir workspace
