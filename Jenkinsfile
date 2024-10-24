@@ -19,6 +19,9 @@ pipeline {
                 sh '''
                     rm -rf workspace
                     mkdir workspace
+                    cd workspace
+                    iectl publisher workspace init
+                    cd ..
 
                     iectl publisher docker-engine v -u http://localhost:2375
 
@@ -29,12 +32,6 @@ pipeline {
 
                     ls
                     
-                    cd workspace
-
-                    ls
-
-                    iectl publisher workspace init
-
                     iectl config add iem --name "iemdev" --url ${IEM_URL} --user ${USER_NAME} --password '$PSWD'
                     iectl publisher standalone-app create --reponame ${REPO_NAME} --appdescription "upload using Jenkins" --iconpath ${ICON_PATH} --appname ${APP_NAME}
 
