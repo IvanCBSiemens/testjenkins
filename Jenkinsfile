@@ -28,7 +28,7 @@ pipeline {
                         export IE_SKIP_CERTIFICATE=true
                         export EDGE_SKIP_TLS=1
 
-                        iectl config add publisher --name "publisherdev" --dockerurl "http://localhost:2375" --workspace workspacedir
+                        iectl config add publisher --name "publisherdev" --dockerurl "http://localhost:2375" --workspace ${workspacedir}
 
                         ls
 
