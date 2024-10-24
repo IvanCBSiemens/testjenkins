@@ -20,7 +20,7 @@ pipeline {
 
                     sh """
                         rm -rf ${workspacedir}
-                        mkdir ${workspacedir}
+                        mkdir -p ${workspacedir}
                         cd ${workspacedir}
 
                         iectl publisher docker-engine v -u http://localhost:2375
