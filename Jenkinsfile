@@ -18,7 +18,7 @@ pipeline {
                     echo 'Uploading ...'
 
                     def workspacedir = pwd() + "/workspace"
-
+                    echo "$workspacedir"
                     sh '''
                         rm -rf workspace
                         mkdir workspace
