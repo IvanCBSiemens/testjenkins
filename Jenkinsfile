@@ -15,13 +15,14 @@ pipeline {
         stage('Upload') {
             steps {
                 script {
+                    def workspacedir = pwd() + "/workspace" // Capture the current directory and append /workspace
                     echo 'Uploading ...'
 
-                    sh '''
-                        rm -rf workspace
-                        mkdir workspace
-                        cd workspace
-                        export workspacedir=$(pwd)
+                    sh """
+                        rm -rf ${workspacedir}
+                        mkdir ${workspacedir}
+                        cd ${workspacedir}
+
                         iectl publisher docker-engine v -u http://localhost:2375
 
                         export IE_SKIP_CERTIFICATE=true
@@ -29,10 +30,10 @@ pipeline {
 
                         iectl config add publisher --name "publisherdev" --dockerurl "http://localhost:2375" --workspace ${workspacedir}
 
-                        ls
+                        ls 
 
                         iectl publisher workspace init
-                    
+
                         iectl config add iem --name "iemdev" --url ${IEM_URL} --user ${USER_NAME} --password '$PSWD'
                         iectl publisher standalone-app create --reponame ${REPO_NAME} --appdescription "upload using Jenkins" --iconpath ${ICON_PATH} --appname ${APP_NAME}
 
@@ -44,12 +45,10 @@ pipeline {
                         iectl publisher standalone-app version create --appname ${APP_NAME} --changelogs "new release" --yamlpath "docker-compose.prod.yml" --versionnumber \$version_new -n '{"hello-edge":[{"name":"hello-edge","protocol":"HTTP","port":"80","headers":"","rewriteTarget":"/"}]}' -s 'hello-edge' -t 'FromBoxReverseProxy' -u "hello-edge" -r "/"
 
                         iectl publisher app-project upload catalog --appname ${APP_NAME} -v \$version_new
-
-                '''
-              }
-            }
+            """
         }
-      
+    }
+} 
     }
 }
 
