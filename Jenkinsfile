@@ -17,13 +17,11 @@ pipeline {
                 script {
                     echo 'Uploading ...'
 
-                    def workspacedir = pwd() + "/workspace"
-                    echo "$workspacedir"
-                    echo "2"
                     sh '''
                         rm -rf workspace
                         mkdir workspace
-
+                        cd workspace
+                        export workspacedir=$(pwd)
                         iectl publisher docker-engine v -u http://localhost:2375
 
                         export IE_SKIP_CERTIFICATE=true
